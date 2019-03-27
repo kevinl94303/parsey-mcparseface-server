@@ -68,10 +68,14 @@ def parse():
 
         doc = data.get('doc')
         parsed_doc = exec_parser(doc)
-        for line in parsed_doc.splitlines():
-            body.append(line.split('\t'))
 
-        return jsonify(body=body)
+        if request.headers.get('Accept') == 'application/json':
+            for line in parsed_doc.splitlines():
+                body.append(line.split('\t'))
+            return jsonify(body=body)
+            
+        else:
+            return parsed_doc
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=80)
