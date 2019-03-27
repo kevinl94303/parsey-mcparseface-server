@@ -1,4 +1,4 @@
-# syntaxnet-server
+# Syntaxnet Server
 Flask app to serve Syntaxnet Parsey McParseface parser
 
 To start Syntaxnet server, navigate to `/server` and run `docker build --tag=syntaxnet . && docker run -p 8000:80 syntaxnet`.
