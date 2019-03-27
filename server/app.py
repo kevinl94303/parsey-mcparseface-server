@@ -1,9 +1,9 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 import os
 import socket
 import sys
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../frontend/build')
 
 def exec_parser(doc):
     parsed_doc = ''
@@ -22,7 +22,7 @@ def exec_parser(doc):
         os.dup2(write_parse, 1)
         os.close(read_doc)
         os.close(write_parse)
-        os.execl('/bin/bash', '-v', './parse.sh')
+        os.execl('/bin/bash', '-v', '/opt/tensorflow/syntaxnet/syntaxnet/parse.sh')
 
     else:
         # Parent Process
@@ -46,14 +46,25 @@ def exec_parser(doc):
 
     return parsed_doc
 
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve(path):
+    if path != "" and os.path.exists('../frontend/build' + path):
+        return send_from_directory('../frontend/build', path)
+    else:
+        print('../frontend/build' + path)
+        return send_from_directory('../frontend/build', 'index.html')
+
+
 @app.route("/", methods=['POST'])
 def parse():
     if request.method == 'POST':
         body = []
 
         data = request.form
-        if 'doc' not in data or len(data['doc']) == 0:
-            return '<i>Rip</i>'
+        if 'doc' not in data:
+            return jsonify(body=None)
+
         doc = data.get('doc')
         parsed_doc = exec_parser(doc)
         for line in parsed_doc.splitlines():
