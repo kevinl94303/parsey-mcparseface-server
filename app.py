@@ -53,7 +53,7 @@ def parse():
 
         data = request.form
         if 'doc' not in data or len(data['doc']) == 0:
-            return '<i>Rip</i>'
+            return jsonify(body=None)
         doc = data.get('doc')
         parsed_doc = exec_parser(doc)
         for line in parsed_doc.splitlines():
