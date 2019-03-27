@@ -10,6 +10,8 @@ COPY scripts/parse.sh /opt/tensorflow/syntaxnet/syntaxnet/parse.sh
 
 RUN pip install --trusted-host pypi.python.org -r server/requirements.txt
 
+RUN chmod -R 777 frontend/build
+
 EXPOSE 80
 
 CMD ["python", "server/app.py"]

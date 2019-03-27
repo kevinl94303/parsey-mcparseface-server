@@ -49,10 +49,11 @@ def exec_parser(doc):
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve(path):
-    if path != "" and os.path.exists('../frontend/build' + path):
+    sys.stderr.write(os.path.abspath('frontend/build/' + path))
+    if path != "" and os.path.exists('frontend/build/' + path):
         return send_from_directory('../frontend/build', path)
     else:
-        print('../frontend/build' + path)
+        sys.stderr.write('Requested file not found, serving index.html')
         return send_from_directory('../frontend/build', 'index.html')
 
 
