@@ -62,7 +62,8 @@ def parse():
     if request.method == 'POST':
         body = []
 
-        data = request.form
+        data = request.get_json()
+        sys.stderr.write('data' + str(data))
         if 'doc' not in data:
             return jsonify(body=None)
 
@@ -73,7 +74,7 @@ def parse():
             for line in parsed_doc.splitlines():
                 body.append(line.split('\t'))
             return jsonify(body=body)
-            
+
         else:
             return parsed_doc
 
