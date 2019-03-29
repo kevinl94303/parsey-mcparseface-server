@@ -8,9 +8,6 @@ The server accepts POST requests to localhost:8000, with the payload including a
 For example:
 ![Postman Example](https://github.com/kevinl94303/syntaxnet-server/blob/master/static-assets/request.png?raw=true "Postman Example")
 
-Or, in plain text format:
-![Postman Example](https://github.com/kevinl94303/syntaxnet-server/blob/master/static-assets/request-raw.png?raw=true "Postman Example")
-
 There is a front-end interface to display the results of the dependency parsing, which can be accessed in the browser at localhost:8000. 
 
 ![Frontend](https://github.com/kevinl94303/syntaxnet-server/blob/master/static-assets/frontend.png?raw=true "Frontend Interface")
