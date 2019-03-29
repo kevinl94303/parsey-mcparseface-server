@@ -3,8 +3,10 @@ wordWidth = 60
 wordHeight = 20
 levelHeight = (level) -> 2 + Math.pow(level, 1.8) * 10
 
-window.drawTree = (svgElement, conllData) ->
+window.drawTree = (svgElement, doc) ->
+	conllData = await getDependencyParse(doc)
 	svg = d3.select(svgElement)
+	console.log(conllData)
 	data = parseConll(conllData)
 
 	# compute edge levels
@@ -102,3 +104,17 @@ parseConll = (conllData) ->
 		tag = if cpos != fpos then cpos+' '+fpos else cpos
 		data.push id: Number(id), word: word, tag: tag, parent: Number(parent), dependency: dependency, level: 1
 	data
+
+getDependencyParse = (doc) ->
+	fetch('/',{
+			method: "POST",
+			body: JSON.stringify({ 
+				doc: doc
+			}),
+			headers: {
+				"Content-Type": "application/json",
+				"Accept": "application/json"
+			}
+	})
+	.then (res) -> res.json()
+	.then (body) -> body['body']
