@@ -2,7 +2,7 @@
 (function() {
   var getDependencyParse, levelHeight, maximum, parseConll, under, wordHeight, wordWidth;
 
-  wordWidth = 60;
+  wordWidth = 100;
 
   wordHeight = 20;
 
@@ -12,9 +12,21 @@
 
   window.drawTree = async function(svgElement, doc) {
     var arrows, conllData, data, dependencies, e, edge, edges, i, item, j, k, len, len1, len2, svg, tags, treeHeight, treeWidth, triangle, words;
-    conllData = (await getDependencyParse(doc));
     svg = d3.select(svgElement);
-    console.log(conllData);
+    svg.attr('width', function() {
+      return wordWidth;
+    }).attr('height', function() {
+      return wordHeight * 2;
+    }).append('text').text(function() {
+      return "Loading...";
+    }).attr('class', function() {
+      return "tag";
+    }).attr('x', function() {
+      return wordWidth / 2;
+    }).attr('y', function() {
+      return wordHeight * 3 / 2;
+    }).attr('text-anchor', 'middle');
+    conllData = (await getDependencyParse(doc));
     data = parseConll(conllData);
     // compute edge levels
     edges = (function() {
@@ -60,8 +72,8 @@
       item = data[k];
       item.bottom = treeHeight - 1.8 * wordHeight;
       item.top = item.bottom - levelHeight(item.level);
-      item.left = item.id * wordWidth;
-      item.right = item.parent * wordWidth;
+      item.left = item.id * wordWidth + (wordWidth / 2);
+      item.right = item.parent * wordWidth + (wordWidth / 2);
       item.mid = (item.right + item.left) / 2;
       item.diff = (item.right - item.left) / 4;
       item.arrow = item.top + (item.bottom - item.top) * .25;
@@ -75,7 +87,7 @@
     }).attr('class', function(d) {
       return `word w${d.id}`;
     }).attr('x', function(d) {
-      return wordWidth * d.id;
+      return wordWidth * d.id + (wordWidth / 2);
     }).attr('y', treeHeight - wordHeight).on('mouseover', function(d) {
       svg.selectAll('.word, .dependency, .edge, .arrow').classed('active', false);
       svg.selectAll('.tag').attr('opacity', 0);
@@ -90,7 +102,7 @@
     }).attr('class', function(d) {
       return `tag w${d.id}`;
     }).attr('x', function(d) {
-      return wordWidth * d.id;
+      return wordWidth * d.id + (wordWidth / 2);
     }).attr('y', treeHeight).attr('opacity', 0).attr('text-anchor', 'middle').attr('font-size', '90%');
     edges = svg.selectAll('.edge').data(data).enter().append('path').filter(function(d) {
       return d.id;

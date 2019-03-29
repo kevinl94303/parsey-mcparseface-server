@@ -2,6 +2,23 @@
 <head>
 	<meta charset="utf-8">
 	<title>Dependency Parsing</title>
+	<script>
+	// Auto-Grow-TextArea script.
+	// Script copyright (C) 2011 www.cryer.co.uk.
+	// Script is free to use provided this copyright header is included.
+	function AutoGrowTextArea(textField)
+	{
+	if (textField.clientHeight < textField.scrollHeight)
+	{
+		textField.style.height = textField.scrollHeight + "px";
+		if (textField.clientHeight < textField.scrollHeight)
+		{
+		textField.style.height = 
+			(textField.scrollHeight * 2 - textField.clientHeight) + "px";
+		}
+	}
+	}
+	</script>
 </head>
 <body>
 <link rel="stylesheet" href="css/bootstrap.css">
@@ -15,7 +32,7 @@
 <div class="tree">
 	<svg height="0"></svg>
 </div>
-<textarea id="data" class="form-control">
+<textarea id="data" class="form-control" rows=1 onkeyup="AutoGrowTextArea(this)">
 My hovercraft is full of eels.
 </textarea>
 <button id="draw" class="btn btn-default">Submit</button>

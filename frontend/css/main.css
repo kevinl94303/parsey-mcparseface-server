@@ -1,17 +1,7 @@
-
-@font-face {
-	font-family: BMitra;
-	font-weight: normal;
-	src: url('../fonts/BMitra.eot?#') format('eot'), url('../fonts/BMitra.woff') format('woff'), url('../fonts/BMitra.ttf') format('truetype');
-}
-@font-face {
-	font-family: BMitra;
-	font-weight: bold;
-	src: url('../fonts/BMitraBold.eot?#') format('eot'), url('../fonts/BMitraBold.woff') format('woff'), url('../fonts/BMitraBold.ttf') format('truetype');
-}
+@import url('https://fonts.googleapis.com/css?family=Lato');
 
 h2, .btn {
-	font-family: BMitra, 'B Mitra';
+	font-family: 'Lato', sans-serif;
 }
 h2 {
 	font-weight: bold;
@@ -23,11 +13,16 @@ h2 {
 .container {
 	max-width: 900px;
 }
-textarea {
-	font-family: serif;
-	tab-size: 15;
-	min-height: 300px;
+textarea.form-control {
+	font-family: 'Lato', sans-serif;
 	margin-top: 5px;
+	border: 0;
+	border-bottom: 1px solid #ccc;
+	border-radius: 0;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+    width: 100%;
+    font-size: 18px;
 }
 #draw {
 	margin-top: 5px;

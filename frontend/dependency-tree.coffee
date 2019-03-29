@@ -1,12 +1,19 @@
 
-wordWidth = 60
+wordWidth = 100
 wordHeight = 20
 levelHeight = (level) -> 2 + Math.pow(level, 1.8) * 10
 
 window.drawTree = (svgElement, doc) ->
-	conllData = await getDependencyParse(doc)
 	svg = d3.select(svgElement)
-	console.log(conllData)
+	svg.attr('width', ()->wordWidth)
+	.attr('height', ()->wordHeight * 2)
+	.append('text').text(()->"Loading...")
+	.attr('class', () -> "tag")
+	.attr('x', ()->wordWidth/2)
+	.attr('y', ()->wordHeight * 3/2)
+	.attr('text-anchor', 'middle')
+
+	conllData = await getDependencyParse(doc)
 	data = parseConll(conllData)
 
 	# compute edge levels
@@ -21,8 +28,8 @@ window.drawTree = (svgElement, doc) ->
 	for item in data
 		item.bottom = treeHeight - 1.8 * wordHeight
 		item.top = item.bottom - levelHeight(item.level)
-		item.left = item.id * wordWidth
-		item.right = item.parent * wordWidth
+		item.left = item.id * wordWidth + (wordWidth/2)
+		item.right = item.parent * wordWidth + (wordWidth/2)
 		item.mid = (item.right+item.left)/2
 		item.diff = (item.right-item.left)/4
 		item.arrow = item.top + (item.bottom-item.top)*.25
@@ -36,7 +43,7 @@ window.drawTree = (svgElement, doc) ->
 		.append('text')
 		.text((d) -> d.word)
 		.attr('class', (d) -> "word w#{d.id}")
-		.attr('x', (d) -> wordWidth*d.id)
+		.attr('x', (d) -> wordWidth*d.id + (wordWidth/2))
 		.attr('y', treeHeight-wordHeight)
 		.on 'mouseover', (d) ->
 			svg.selectAll('.word, .dependency, .edge, .arrow').classed('active', false)
@@ -52,7 +59,7 @@ window.drawTree = (svgElement, doc) ->
 		.append('text')
 		.text((d) -> d.tag)
 		.attr('class', (d) -> "tag w#{d.id}")
-		.attr('x', (d) -> wordWidth*d.id)
+		.attr('x', (d) -> wordWidth*d.id + (wordWidth/2))
 		.attr('y', treeHeight)
 		.attr('opacity', 0)
 		.attr('text-anchor', 'middle')
