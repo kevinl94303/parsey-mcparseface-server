@@ -3,7 +3,7 @@ import os
 import socket
 import sys
 
-app = Flask(__name__, static_folder='../frontend/build')
+app = Flask(__name__, static_folder='../frontend')
 
 def exec_parser(doc):
     parsed_doc = ''
@@ -49,19 +49,17 @@ def exec_parser(doc):
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve(path):
-    sys.stderr.write(os.path.abspath('frontend/build/' + path))
-    if path != "" and os.path.exists('frontend/build/' + path):
-        return send_from_directory('../frontend/build', path)
+    sys.stderr.write(os.path.abspath('frontend/' + path))
+    if path != "" and os.path.exists('frontend/' + path):
+        return send_from_directory('../frontend', path)
     else:
         sys.stderr.write('Requested file not found, serving index.html')
-        return send_from_directory('../frontend/build', 'index.html')
+        return send_from_directory('../frontend', 'index.html')
 
 
 @app.route("/", methods=['POST'])
 def parse():
     if request.method == 'POST':
-        body = []
-
         data = request.get_json()
         sys.stderr.write('data' + str(data))
         if 'doc' not in data:
@@ -71,10 +69,7 @@ def parse():
         parsed_doc = exec_parser(doc)
 
         if request.headers.get('Accept') == 'application/json':
-            for line in parsed_doc.splitlines():
-                body.append(line.split('\t'))
-            return jsonify(body=body)
-
+            return jsonify(body=parsed_doc)
         else:
             return parsed_doc
 

@@ -1,0 +1,58 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Dependency Parsing</title>
+</head>
+<body>
+<link rel="stylesheet" href="css/bootstrap.css">
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="tree.css">
+<script type="text/javascript" src="d3.js"></script>
+<script type="text/javascript" src="dependency-tree.js"></script>
+
+<div class="container">
+<h2>Dependency Parsing</h2>
+<div class="tree">
+	<svg height="0"></svg>
+</div>
+<textarea id="data" class="form-control">
+1	Understand	_	NOUN	NNP	_	0	ROOT	_	_
+2	this	_	DET	DT	_	1	dep	_	_
+3	,	_	.	,	_	1	punct	_	_
+4	the	_	DET	DT	_	6	det	_	_
+5	mainstream	_	ADJ	JJ	_	6	amod	_	_
+6	media	_	NOUN	NNS	_	7	nsubj	_	_
+7	wants	_	VERB	VBZ	_	1	dep	_	_
+8	to	_	PRT	TO	_	9	aux	_	_
+9	bring	_	VERB	VB	_	7	xcomp	_	_
+10	down	_	PRT	RP	_	9	prt	_	_
+11	this	_	DET	DT	_	12	det	_	_
+12	presidency	_	NOUN	NN	_	9	dobj	_	_
+13	by	_	ADP	IN	_	9	prep	_	_
+14	any	_	DET	DT	_	15	det	_	_
+15	means	_	NOUN	NNS	_	13	pobj	_	_
+16	yesterday	_	NOUN	NN	_	9	tmod	_	_
+17	even	_	ADV	RB	_	20	advmod	_	_
+18	if	_	ADP	IN	_	20	mark	_	_
+19	it	_	PRON	PRP	_	20	nsubj	_	_
+20	means	_	VERB	VBZ	_	9	advcl	_	_
+21	writing	_	VERB	VBG	_	20	ccomp	_	_
+22	fake	_	ADJ	JJ	_	24	amod	_	_
+23	news	_	NOUN	NN	_	24	nn	_	_
+24	stories	_	NOUN	NNS	_	21	dobj	_	_
+25	,	_	.	,	_	21	punct	_	_
+26	using	_	VERB	VBG	_	21	partmod	_	_
+27	anonymous	_	ADJ	JJ	_	28	amod	_	_
+28	sources	_	NOUN	NNS	_	26	dobj	_	_
+29	.	_	.	.	_	0	ROOT	_	_
+</textarea>
+<button id="draw" class="btn btn-default">Submit</button>
+</div>
+<script type="text/javascript">
+	d3.select('#draw').on('click', function() {
+		drawTree('.tree svg', d3.select('#data')[0][0].value, false);
+	});
+	d3.select('#draw').on('click')();
+</script>
+</body>
+</html>
