@@ -1,5 +1,5 @@
 # Parsey McParseface Server
-Flask app to serve Google's Parsey McParseface parser
+Flask app to serve Google's Parsey McParseface parser. Built with Docker, Flask, Coffeescript, D3, and Bootstrap 3. 
 
 To start Parsey McParseface server, navigate to `/server` and run `docker build --tag=syntaxnet . && docker run -p 8000:80 syntaxnet`.
 
